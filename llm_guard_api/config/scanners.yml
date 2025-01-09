@@ -12,16 +12,16 @@ rate_limit:
   limit: ${RATE_LIMIT_LIMIT:100/minute}
 
 auth:
- type: http_bearer
- token: ${AUTH_TOKEN:}
+  type: http_bearer
+  token: ${AUTH_TOKEN:}
 
 tracing:
   exporter: ${TRACING_EXPORTER:console}
-  endpoint: ${TRACING_OTEL_ENDPOINT:}  # Example: "<traces-endpoint>/v1/traces"
+  endpoint: ${TRACING_OTEL_ENDPOINT:} # Example: "<traces-endpoint>/v1/traces"
 
 metrics:
   exporter: ${METRICS_TYPE:prometheus}
-  endpoint: ${METRICS_ENDPOINT:}  # Example: "<metrics-endpoint>/v1/metrics"
+  endpoint: ${METRICS_ENDPOINT:} # Example: "<metrics-endpoint>/v1/metrics"
 
 # Scanners are applied in the order they are listed here.
 input_scanners:
@@ -47,22 +47,22 @@ input_scanners:
       contains_all: false
   - type: BanTopics
     params:
-      topics: ["violence"]
+      topics: ["violence", "code", "software"]
       threshold: 0.8
       model_max_length: 256
-#  - type: Code
-#    params:
-#      languages: ["Python"]
-#      is_blocked: true
+  #  - type: Code
+  #    params:
+  #      languages: ["Python"]
+  #      is_blocked: true
   - type: Gibberish
     params:
       threshold: 0.97
       model_max_length: 256
   - type: InvisibleText
-    params: { }
+    params: {}
   - type: Language
     params:
-      valid_languages: [ "en" ]
+      valid_languages: ["en"]
       model_max_length: 256
   - type: PromptInjection
     params:
@@ -80,7 +80,7 @@ input_scanners:
       redact_mode: "all"
   - type: Sentiment
     params:
-      threshold: 0.0
+      threshold: -0.8
   - type: TokenLimit
     params:
       limit: 4096
@@ -89,7 +89,6 @@ input_scanners:
     params:
       threshold: 0.9
       model_max_length: 256
-
 
 output_scanners:
   - type: BanCode
@@ -115,10 +114,10 @@ output_scanners:
     params:
       threshold: 0.97
       model_max_length: 256
-#  - type: Code
-#    params:
-#      languages: ["Python"]
-#      is_blocked: true
+  #  - type: Code
+  #    params:
+  #      languages: ["Python"]
+  #      is_blocked: true
   - type: Deanonymize
     params:
       matching_strategy: "exact"
@@ -128,13 +127,13 @@ output_scanners:
   - type: Gibberish
     params:
       threshold: 0.97
-#  - type: JSON
-#    params:
-#      required_elements: 0
-#      repair: true
+  #  - type: JSON
+  #    params:
+  #      required_elements: 0
+  #      repair: true
   - type: Language
     params:
-      valid_languages: [ "en" ]
+      valid_languages: ["en", "ar"]
       model_max_length: 256
   - type: LanguageSame
     params:
@@ -164,7 +163,7 @@ output_scanners:
       threshold: 0.75
   - type: Sentiment
     params:
-      threshold: 0.0
+      threshold: -0.8
   - type: Toxicity
     params:
       threshold: 0.9
